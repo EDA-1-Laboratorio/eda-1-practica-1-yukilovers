@@ -45,30 +45,25 @@ void crearMensaje() {
     char escitala[ren][col];
     char texto[ren * col]; // Arreglo lineal para el texto original
 
-    printf("Escriba el texto a cifrar (sin espacios): ");
-    scanf("%s", texto);
+    printf("Escriba el texto a cifrar (sin espacios):");
+    scanf(" %s", texto);
 
-    // PASO 1: Llenar la matriz con el texto original
-    // La escítala se escribe a lo largo de la vara (fila por fila en la matriz lógica)
-    
-    /* TODO: Escribe aquí los bucles anidados para llenar 'escitala[i][j]' 
-       usando los caracteres de 'texto'.
-       Tip: Necesitas recorrer renglones y luego columnas. */
-       
-    // ... (Tu código aquí) ...
+    for(int i=0; i<ren; i++){
+        for(int j=0; j<col; j++){
+            escitala[i][j]=texto[k++];
+        }
+    }
 
 
     printf("El texto cifrado (leído de la tira) es:\n");
+        
+        for(int i=-0; i<col; i++){
+            for(int j=0; j<ren; j++){
+                printf("|%c|", escitala[j][i]);
+            }
+        }
 
-    // PASO 2: Leer la matriz para obtener el cifrado
-    // Al desenrollar la tira, leemos verticalmente (columna por columna)
-    
-    /* TODO: Escribe aquí los bucles para imprimir el mensaje cifrado.
-       Tip: Ahora el bucle externo debe controlar las columnas y el interno los renglones. */
-
-    // ... (Tu código aquí) ...
-    
-    printf("\n");
+        printf("\n");
 }
 
 void descifrarMensaje() {
@@ -86,29 +81,62 @@ void descifrarMensaje() {
     printf("Escriba el texto cifrado: ");
     scanf("%s", texto);
 
-    // PASO 1: Reconstruir la matriz desde la tira cifrada
-    // Recuerda: El texto cifrado viene en orden de columnas (vertical),
-    // por lo tanto, debemos llenarlo en ese mismo orden.
-
-    /* TODO: Escribe aquí los bucles para llenar la matriz 'escitala'.
-       Tip: El orden de los bucles 'for' es inverso al llenado del cifrado normal. 
-       Debes llenar columna por columna usando el 'texto' cifrado. */
-
-    // ... (Tu código aquí) ...
-
+        for(int i=0;i<col;i++){
+        for(int j=0;j<ren;j++){
+            escitala[j][i] = texto[k++];
+        }
+    }
 
     printf("El texto descifrado es:\n");
 
-    // PASO 2: Leer el mensaje original
-    // Una vez reconstruida la matriz, leemos fila por fila normalmente.
-
-    /* TODO: Escribe aquí los bucles para imprimir el mensaje original. */
-
-    // ... (Tu código aquí) ...
+    for(int i=0;i<ren;i++){
+        for(int j=0;j<col;j++){
+            printf("|%c|", escitala[i][j]);
+        }
+    }
 
     printf("\n");
 }
 
-// PREGUNTA: En la implementación se una matriz auxiliar de dimensiones ren × col para realizar la transposición. 
-// Si tuvieras una restricción de memoria severa y no pudieras crear esa matriz bidimensional, 
-// ¿qué fórmula matemática utilizarías para imprimir el carácter correcto directamente desde el arreglo original texto[] ?
+/*
+PREGUNTA: En la implementación de una matriz auxiliar de dimensiones ren × col para realizar 
+la transposición. 
+-Si tuvieras una restricción de memoria severa y no pudieras crear esa matriz bidimensional, 
+-¿qué fórmula matemática utilizarías para imprimir el carácter correcto directamente 
+desde el arreglo original texto[] ?
+
+k=(i*Columnas)+j
+
+donde k va a ser el indice donde se encuentra el caracter correcto del arreglo unidimensional
+j va a ser el valor de la iteración realizada para las columnas
+columnas sera la cantidad de columnas que tiene la matriz
+i es el valor de la iteración realizada para las filas.
+
+se aplicaria de la siguiente forma.
+
+for (int i = 0; i < filas; i++) {
+    for (int j = 0; j < colum; j++) {
+        // Esta es la magia:
+        int indice = (j * colum) + i; 
+        
+        if (indice < lon) {
+            printf("%c", texto[indice]);
+        }
+    }
+}
+
+Ya que por ejemplo si se tiene una cadena de {1,2,3,4,5,6,7,8,9}
+
+y se ase uso de la fórmula y de los bucles primero i=0 y j=0 en la primera iteracion
+quendo la fórmula de esta forma:
+
+k=(0*3)+0 //Donde se elige que usuario eligio que la matriz sea de 3x3 por lo tanto columnas=3
+k=0
+
+y al imprimir text[k] pues se imprime texto[0]=1
+
+ahora si que en este caso la fórmula lo que hace es ir avanzando de 3 en 3 y cada 3 posiciones
+despues de la incial corresponderian al primer cambio para obtener la primera fila transpuesta
+de la matriz.
+
+*/
